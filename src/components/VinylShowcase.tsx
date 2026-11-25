@@ -30,16 +30,18 @@ import {
 
 const PLAYER_ID = "vinyl-showcase";
 
+const DEFAULT_ICON_CLASS = "w-8 h-8 sm:w-9 sm:h-9";
+
 const STREAMING_PLATFORMS = [
-  { key: "spotify", label: "Spotify", name: "Spotify", Icon: SpotifyIcon, labelClass: "font-bold tracking-tight" },
-  { key: "appleMusic", label: "Music", name: "Apple Music", Icon: AppleMusicTileIcon, labelClass: "font-semibold tracking-tight" },
-  { key: "youtube", label: "YouTube", name: "YouTube", Icon: YouTubeIcon, labelClass: "font-bold tracking-tight" },
-  { key: "deezer", label: "deezer", name: "Deezer", Icon: DeezerIcon, labelClass: "font-bold tracking-tight" },
-  { key: "tidal", label: "TIDAL", name: "TIDAL", Icon: TidalIcon, labelClass: "font-bold tracking-[0.12em]" },
-  { key: "joox", label: "JOOX", name: "JOOX", Icon: JooxIcon, labelClass: "font-black tracking-wider" },
-  { key: "amazonMusic", label: "amazon", name: "Amazon Music", Icon: AmazonMusicIcon, labelClass: "font-bold tracking-tight" },
-  { key: "resso", label: "resso", name: "Resso", Icon: RessoIcon, labelClass: "font-semibold tracking-tight" },
-  { key: "tiktokMusic", label: "TikTok Music", name: "TikTok Music", Icon: TikTokMusicIcon, labelClass: "font-bold tracking-tight leading-tight" },
+  { key: "spotify", label: "Spotify", name: "Spotify", Icon: SpotifyIcon, labelClass: "font-bold tracking-tight", iconClass: DEFAULT_ICON_CLASS },
+  { key: "appleMusic", label: "Music", name: "Apple Music", Icon: AppleMusicTileIcon, labelClass: "font-semibold tracking-tight", iconClass: DEFAULT_ICON_CLASS },
+  { key: "youtube", label: "YouTube", name: "YouTube", Icon: YouTubeIcon, labelClass: "font-bold tracking-tight", iconClass: DEFAULT_ICON_CLASS },
+  { key: "deezer", label: "deezer", name: "Deezer", Icon: DeezerIcon, labelClass: "font-bold tracking-tight", iconClass: DEFAULT_ICON_CLASS },
+  { key: "tidal", label: "TIDAL", name: "TIDAL", Icon: TidalIcon, labelClass: "font-bold tracking-[0.12em]", iconClass: DEFAULT_ICON_CLASS },
+  { key: "joox", label: "JOOX", name: "JOOX", Icon: JooxIcon, labelClass: "font-black tracking-wider", iconClass: "h-[22px] sm:h-[25px] w-auto" },
+  { key: "amazonMusic", label: "amazon", name: "Amazon Music", Icon: AmazonMusicIcon, labelClass: "font-bold tracking-tight", iconClass: "h-[26px] sm:h-[30px] w-auto" },
+  { key: "resso", label: "resso", name: "Resso", Icon: RessoIcon, labelClass: "font-semibold tracking-tight", iconClass: DEFAULT_ICON_CLASS },
+  { key: "tiktokMusic", label: "TikTok Music", name: "TikTok Music", Icon: TikTokMusicIcon, labelClass: "font-bold tracking-tight leading-tight", iconClass: DEFAULT_ICON_CLASS },
 ] as const;
 
 export default function VinylShowcase() {
@@ -497,7 +499,7 @@ export default function VinylShowcase() {
 
               {/* Deretan Logo Platform Streaming Bebas Tanpa Badge (3x3 mobile / 5+4 centered desktop) */}
               <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-5 sm:gap-x-3 sm:gap-y-6 w-full">
-                {STREAMING_PLATFORMS.map(({ key, label, name, Icon, labelClass }) => (
+                {STREAMING_PLATFORMS.map(({ key, label, name, Icon, labelClass, iconClass }) => (
                   <a
                     key={key}
                     href={links[key]}
@@ -506,7 +508,9 @@ export default function VinylShowcase() {
                     title={`Dengarkan MERAH di ${name}`}
                     className="group w-[calc(33.333%-0.5rem)] sm:w-[calc(20%-0.75rem)] min-h-[56px] py-1 flex flex-col items-center justify-center gap-2 text-zinc-200 hover:text-white transition-all duration-150 hover:-translate-y-1 active:scale-95 motion-reduce:hover:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded-xl"
                   >
-                    <Icon className="w-8 h-8 sm:w-9 sm:h-9 shrink-0 transition-transform duration-150 group-hover:scale-110" />
+                    <div className="h-8 sm:h-9 flex items-center justify-center shrink-0">
+                      <Icon className={`${iconClass} shrink-0 transition-transform duration-150 group-hover:scale-110`} />
+                    </div>
                     <span className={`text-xs font-sans text-zinc-400 group-hover:text-white text-center leading-tight ${labelClass}`}>
                       {label}
                     </span>
