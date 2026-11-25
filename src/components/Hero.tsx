@@ -30,7 +30,7 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover grayscale contrast-110 brightness-105"
+          className="w-full h-full object-cover grayscale contrast-105 brightness-[1.3]"
           poster="/videos/hero-poster.webp"
         >
           <source src="/videos/hero.webm" type="video/webm" />
@@ -41,9 +41,8 @@ export default function Hero() {
           />
         </video>
 
-        {/* Balanced dark tint & subtle edge vignette preserving video clarity */}
-        <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/45" />
+        {/* Minimal edge vignette only at bottom/top edges so stage footage shines brightly */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20" />
       </motion.div>
 
       {/* 2. Poster Wordmark & Release Card */}
