@@ -87,7 +87,7 @@ export default function MerchSection() {
                         ? "(max-width: 1024px) 92vw, 360px"
                         : "(max-width: 1024px) 46vw, 360px"
                     }
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                   />
 
                   {!item.inStock && (
@@ -142,7 +142,11 @@ export default function MerchSection() {
       {/* Responsive Dialog: Mobile Bottom Sheet / Desktop Centered Modal */}
       <AnimatePresence>
         {selectedProduct && (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: EDITORIAL_EASE }}
             onClick={() => setSelectedProduct(null)}
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-md cursor-pointer"
           >
@@ -150,12 +154,13 @@ export default function MerchSection() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="merch-modal-title"
+              data-lenis-prevent
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, y: 48 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 48 }}
-              transition={{ duration: 0.28, ease: EDITORIAL_EASE }}
-              className="rounded-t-3xl sm:rounded-2xl bg-[#141417] px-5 pt-4 pb-7 sm:p-8 max-w-md w-full text-white shadow-[0_25px_70px_rgba(0,0,0,0.95)] relative cursor-default"
+              initial={{ opacity: 0, y: 40, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 32, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 320, damping: 30, mass: 0.85 }}
+              className="rounded-t-3xl sm:rounded-2xl bg-[#141417] px-5 pt-4 pb-7 sm:p-8 max-w-md w-full text-white shadow-[0_25px_70px_rgba(0,0,0,0.95)] relative cursor-default will-change-transform"
             >
               {/* Mobile Bottom-Sheet Grab Handle */}
               <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mb-4 sm:hidden" aria-hidden="true" />
@@ -249,7 +254,7 @@ export default function MerchSection() {
                 Lanjutkan ke WhatsApp Admin
               </Button>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

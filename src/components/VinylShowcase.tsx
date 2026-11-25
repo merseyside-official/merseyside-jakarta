@@ -146,10 +146,7 @@ export default function VinylShowcase() {
       id="new-release"
       className="relative w-full py-16 sm:py-24 bg-black text-white overflow-hidden"
     >
-      {/* ========================================================================= */}
-      {/* TEXTURE KERTAS LECEK HITAM (DARK CRUMPLED & CREASED PAPER EFFECT)         */}
-      {/* Faded in gradually with CSS mask-image for 100% seamless transition       */}
-      {/* ========================================================================= */}
+      {/* Lightweight GPU-composited Creased Paper Ambient Texture (Zero Per-Pixel SVG Filters) */}
       <div
         className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0"
         style={{
@@ -159,72 +156,25 @@ export default function VinylShowcase() {
             "linear-gradient(to bottom, transparent 0%, black 100px, black calc(100% - 100px), transparent 100%)",
         }}
       >
-        {/* 1. Procedural 3D Crumpled Paper Wrinkles & Crease Lighting Filter */}
-        <svg
-          className="absolute inset-0 w-full h-full opacity-20 mix-blend-screen contrast-125"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <filter id="crumpled-paper-texture" x="0%" y="0%" width="100%" height="100%">
-              {/* Natural paper wrinkle ridges & fold contours */}
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.012 0.022"
-                numOctaves="3"
-                seed="38"
-                result="paperFolds"
-              />
-              {/* Lighting calculation creating realistic highlight/shadow ridges */}
-              <feDiffuseLighting
-                in="paperFolds"
-                lightingColor="#e2e8f0"
-                surfaceScale="3.5"
-                diffuseConstant="1.2"
-                result="creaseLighting"
-              >
-                <feDistantLight azimuth="55" elevation="45" />
-              </feDiffuseLighting>
-              <feBlend mode="multiply" in="SourceGraphic" in2="creaseLighting" />
-            </filter>
-          </defs>
-          <rect width="100%" height="100%" filter="url(#crumpled-paper-texture)" fill="#2a2a2a" />
-        </svg>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_25%,rgba(255,255,255,0.06),transparent_60%),radial-gradient(ellipse_at_75%_70%,rgba(255,255,255,0.04),transparent_55%)]" />
 
-        {/* 2. Vector Deep Crease & Fold Lines (Faceted Origami / Major Wrinkles) */}
+        {/* Static Faceted Origami Fold Hairlines (No expensive feTurbulence / feDiffuseLighting) */}
         <svg
-          className="absolute inset-0 w-full h-full opacity-25 mix-blend-screen"
+          className="absolute inset-0 w-full h-full opacity-20 mix-blend-screen"
           viewBox="0 0 1440 900"
           preserveAspectRatio="none"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
-          {/* Major Crease Lines with Highlight + Cast Shadow for 3D depth */}
           <path d="M-50 180 L480 380 L1490 120" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2" fill="none" />
-          <path d="M-50 182 L480 382 L1490 122" stroke="rgba(0,0,0,0.8)" strokeWidth="2.5" fill="none" />
-
           <path d="M180 -50 L480 380 L280 950" stroke="rgba(255,255,255,0.3)" strokeWidth="1.2" fill="none" />
-          <path d="M182 -50 L482 382 L282 950" stroke="rgba(0,0,0,0.8)" strokeWidth="2.5" fill="none" />
-
           <path d="M1250 -50 L950 460 L1180 950" stroke="rgba(255,255,255,0.3)" strokeWidth="1.2" fill="none" />
-          <path d="M1248 -50 L948 462 L1178 950" stroke="rgba(0,0,0,0.8)" strokeWidth="2.5" fill="none" />
-
-          <path d="M480 380 L950 460" stroke="rgba(255,255,255,0.4)" strokeWidth="1.6" fill="none" />
-          <path d="M480 382 L950 462" stroke="rgba(0,0,0,0.85)" strokeWidth="3" fill="none" />
-
-          {/* Secondary Minor Creases */}
-          <path d="M80 620 L380 560 L680 750" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
-          <path d="M820 180 L1080 310 L1320 220" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
-          <path d="M680 750 L950 460 L1300 680" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+          <path d="M480 380 L950 460" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" fill="none" />
+          <path d="M80 620 L380 560 L680 750" stroke="rgba(255,255,255,0.22)" strokeWidth="0.8" fill="none" />
+          <path d="M820 180 L1080 310 L1320 220" stroke="rgba(255,255,255,0.22)" strokeWidth="0.8" fill="none" />
+          <path d="M680 750 L950 460 L1300 680" stroke="rgba(255,255,255,0.22)" strokeWidth="0.8" fill="none" />
         </svg>
 
-        {/* 3. Subtle Analog Paper Fiber Noise */}
-        <div
-          className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          }}
-        />
-
-        {/* Radial vignette keeping center focused */}
         <div className="absolute inset-0 bg-radial from-transparent via-black/25 to-black/80 pointer-events-none" />
       </div>
 
@@ -262,34 +212,24 @@ export default function VinylShowcase() {
             <div className="relative w-full max-w-[320px] sm:max-w-[420px] aspect-square sm:aspect-[1.3/1] mt-20 sm:mt-0 flex items-center justify-center sm:justify-start select-none">
               {/* Responsive Translation Wrapper: vertical LP unboxing on mobile, horizontal peek on sm+ */}
               <div
-                className={`absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 z-10 w-[82%] sm:w-[78%] aspect-square transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                className={`absolute left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 z-10 w-[82%] sm:w-[78%] aspect-square transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
                   isPlaying
                     ? "-translate-y-[38%] sm:translate-y-0 sm:translate-x-[44%]"
                     : "-translate-y-[18%] sm:translate-y-0 sm:translate-x-[25%]"
                 }`}
               >
-                {/* Spinning Vinyl Record */}
-                <motion.div
+                {/* GPU-accelerated Vinyl Record (freezes gracefully at current angle on pause) */}
+                <div
                   role="button"
                   tabIndex={0}
                   aria-pressed={isPlaying}
                   aria-label={isPlaying ? "Pause single MERAH" : "Putar single MERAH"}
                   onKeyDown={handleToggleKeyDown}
-                  initial={false}
-                  animate={{
-                    rotate: isPlaying ? 360 : 0,
-                  }}
-                  transition={{
-                    rotate: {
-                      repeat: isPlaying ? Infinity : 0,
-                      duration: 4.8,
-                      ease: "linear",
-                    },
-                  }}
                   onClick={togglePlay}
                   title={isPlaying ? "Klik untuk Pause" : "Klik untuk Putar Vinyl"}
-                  className="relative w-full h-full rounded-full cursor-pointer shadow-[0_25px_60px_rgba(0,0,0,0.95)] flex items-center justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  className="animate-vinyl-spin relative w-full h-full rounded-full cursor-pointer shadow-[0_25px_60px_rgba(0,0,0,0.95)] flex items-center justify-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   style={{
+                    animationPlayState: isPlaying ? "running" : "paused",
                     background:
                       "radial-gradient(circle at center, #070707 0%, #151515 18%, #050505 22%, #191919 35%, #040404 48%, #1c1c1c 60%, #060606 72%, #181818 86%, #020202 100%)",
                   }}
@@ -319,7 +259,7 @@ export default function VinylShowcase() {
                     />
                     <div className="relative z-10 w-3.5 h-3.5 rounded-full bg-black shadow-inner" />
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               {/* Cardboard Sleeve */}

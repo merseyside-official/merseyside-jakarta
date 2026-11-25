@@ -49,7 +49,7 @@ export default function Header() {
     <>
       <ScrollProgressBar />
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isScrolled
             ? "bg-black/90 backdrop-blur-xl py-2.5 shadow-2xl"
             : "bg-gradient-to-b from-black/80 via-black/35 to-transparent py-4"

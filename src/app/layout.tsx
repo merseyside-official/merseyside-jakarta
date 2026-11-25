@@ -47,7 +47,7 @@ export default function RootLayout({
     <html
       lang="id"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${antonioDisplay.variable} scroll-smooth bg-black text-white antialiased`}
+      className={`${geistSans.variable} ${antonioDisplay.variable} bg-black text-white antialiased`}
     >
       <body className="min-h-screen bg-black text-white font-sans overflow-x-clip">
         <MotionShell>{children}</MotionShell>

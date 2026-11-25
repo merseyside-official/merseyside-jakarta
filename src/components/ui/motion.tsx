@@ -2,18 +2,24 @@
 
 import React from "react";
 import { motion, MotionConfig, useScroll, useSpring } from "framer-motion";
+import SmoothScroll from "@/components/ui/smooth-scroll";
 
-export const EDITORIAL_EASE = [0.22, 1, 0.36, 1] as const;
+export const EDITORIAL_EASE = [0.16, 1, 0.3, 1] as const;
 
 export function MotionShell({ children }: { children: React.ReactNode }) {
-  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  return (
+    <MotionConfig reducedMotion="user">
+      <SmoothScroll />
+      {children}
+    </MotionConfig>
+  );
 }
 
 export function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 240,
-    damping: 32,
+    stiffness: 180,
+    damping: 30,
     restDelta: 0.001,
   });
 
@@ -21,7 +27,7 @@ export function ScrollProgressBar() {
     <motion.div
       aria-hidden="true"
       style={{ scaleX }}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-white origin-left z-[60] pointer-events-none"
+      className="fixed top-0 left-0 right-0 h-[2px] bg-white origin-left z-[60] pointer-events-none will-change-transform"
     />
   );
 }
@@ -29,7 +35,7 @@ export function ScrollProgressBar() {
 export function Reveal({
   children,
   delay = 0,
-  y = 22,
+  y = 14,
   className = "",
 }: {
   children: React.ReactNode;
@@ -41,8 +47,8 @@ export function Reveal({
     <motion.div
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.14 }}
-      transition={{ duration: 0.55, delay, ease: EDITORIAL_EASE }}
+      viewport={{ once: true, amount: "some", margin: "0px 0px -24px 0px" }}
+      transition={{ duration: 0.72, delay, ease: EDITORIAL_EASE }}
       className={className}
     >
       {children}

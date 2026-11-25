@@ -5,10 +5,11 @@ import Link from "next/link";
 import { ArrowUp, Lock, Mail, MessageSquare } from "lucide-react";
 import { BAND_INFO } from "@/data/bandData";
 import MerseysideLogo from "@/components/MerseysideLogo";
+import { triggerSmoothScrollTop } from "@/components/ui/smooth-scroll";
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    triggerSmoothScrollTop();
   };
 
   return (

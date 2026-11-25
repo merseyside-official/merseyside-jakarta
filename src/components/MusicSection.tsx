@@ -77,27 +77,37 @@ export default function MusicSection() {
                 const isSelected = selectedSong.id === song.id;
 
                 return (
-                  <motion.button
+                  <div
                     key={song.id}
-                    type="button"
-                    whileHover={{ scale: 1.07, y: -6 }}
-                    whileTap={{ scale: 0.96 }}
-                    transition={{ type: "spring", stiffness: 360, damping: 24 }}
-                    onClick={() => selectTrack(song)}
-                    aria-label={`Pilih lagu ${song.title}`}
-                    title={`${song.title} (${song.year})`}
-                    className={`relative aspect-square ${card.size} ${card.rotate} ${card.offset} ${
-                      isSelected ? "z-40 ring-2 ring-white scale-[1.04]" : card.z
-                    } shrink-0 rounded-2xl overflow-hidden bg-zinc-900 shadow-[0_20px_50px_rgba(0,0,0,0.9)] hover:z-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer`}
+                    className={`relative shrink-0 ${card.rotate} ${card.offset} ${
+                      isSelected ? "z-40" : card.z
+                    } hover:z-40 transition-[z-index] duration-150`}
                   >
-                    <Image
-                      src={song.cover}
-                      alt={song.title}
-                      fill
-                      sizes="(max-width: 640px) 112px, 260px"
-                      className="object-cover"
-                    />
-                  </motion.button>
+                    <motion.button
+                      type="button"
+                      animate={{
+                        scale: isSelected ? 1.05 : 1,
+                        y: isSelected ? -5 : 0,
+                      }}
+                      whileHover={{ scale: 1.08, y: -9 }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                      onClick={() => selectTrack(song)}
+                      aria-label={`Pilih lagu ${song.title}`}
+                      title={`${song.title} (${song.year})`}
+                      className={`relative block aspect-square ${card.size} rounded-2xl overflow-hidden bg-zinc-900 shadow-[0_20px_50px_rgba(0,0,0,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white cursor-pointer will-change-transform ${
+                        isSelected ? "ring-2 ring-white" : ""
+                      }`}
+                    >
+                      <Image
+                        src={song.cover}
+                        alt={song.title}
+                        fill
+                        sizes="(max-width: 640px) 112px, 260px"
+                        className="object-cover"
+                      />
+                    </motion.button>
+                  </div>
                 );
               })}
             </div>
@@ -241,7 +251,11 @@ export default function MusicSection() {
       {/* Responsive Dialog: Mobile Bottom Sheet / Desktop Centered Modal */}
       <AnimatePresence>
         {activeLyrics && (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: EDITORIAL_EASE }}
             onClick={() => setActiveLyrics(null)}
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/85 backdrop-blur-md cursor-pointer"
           >
@@ -249,12 +263,13 @@ export default function MusicSection() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="lyrics-modal-title"
+              data-lenis-prevent
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, y: 48 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 48 }}
-              transition={{ duration: 0.28, ease: EDITORIAL_EASE }}
-              className="rounded-t-3xl sm:rounded-2xl bg-[#151518] px-5 pt-4 pb-7 sm:p-8 max-w-lg w-full max-h-[85svh] overflow-y-auto text-white shadow-[0_25px_70px_rgba(0,0,0,0.95)] relative cursor-default"
+              initial={{ opacity: 0, y: 40, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 32, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 320, damping: 30, mass: 0.85 }}
+              className="rounded-t-3xl sm:rounded-2xl bg-[#151518] px-5 pt-4 pb-7 sm:p-8 max-w-lg w-full max-h-[85svh] overflow-y-auto text-white shadow-[0_25px_70px_rgba(0,0,0,0.95)] relative cursor-default will-change-transform"
             >
               {/* Mobile Sheet Grab Indicator */}
               <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mb-4 sm:hidden" aria-hidden="true" />
@@ -295,7 +310,7 @@ export default function MusicSection() {
                 </Button>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
